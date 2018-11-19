@@ -1,10 +1,4 @@
-/*归并排序的改进，把数据分成前后两个数组(递归分到每个数组仅有一个数据项)，
-合并数组，合并时，出现前面的数组值array[i]大于后面数组值array[j]时；则前面
-数组array[i]~array[mid]都是大于array[j]的，count += mid+1 - i
-参考剑指Offer，但是感觉剑指Offer归并过程少了一步拷贝过程。
-还有就是测试用例输出结果比较大，对每次返回的count mod(1000000007)求余
-*/
- 
+
 public class Solution {
     public int InversePairs(int [] array) {
         if(array==null||array.length==0)
@@ -22,45 +16,36 @@ public class Solution {
     }
     private int InversePairsCore(int[] array,int[] copy,int low,int high)
     {
-        if(low==high)
-        {
+        if(low==high){
+            array[low]=copy[low];
             return 0;
         }
-        int mid = (low+high)>>1;
-        int leftCount = InversePairsCore(array,copy,low,mid)%1000000007;
-        int rightCount = InversePairsCore(array,copy,mid+1,high)%1000000007;
-        int count = 0;
-        int i=mid;
+        int mid=(low+high)/2;
+        int leftcount=InversePairsCore(array,copy,low,mid-1);
+        int rightcount=InversePairsCore(array,copy,mid,high);
+        int total=(leftcount+rightcount)%1000000007;
+        int i=mid-1;
         int j=high;
-        int locCopy = high;
-        while(i>=low&&j>mid)
-        {
-            if(array[i]>array[j])
-            {
-                count += j-mid;
-                copy[locCopy--] = array[i--];
-                if(count>=1000000007)//数值过大求余
-                {
-                    count%=1000000007;
-                }
-            }
-            else
-            {
-                copy[locCopy--] = array[j--];
+        int index=high;
+        while(i>=low&&j>=mid){       
+            if(copy[i]>copy[j]){
+               array[index--]=copy[i];
+               //有问题
+               total=(total+(j-mid+1))%1000000007; 
+               i--;
+            }else{
+               array[index--]=copy[j];
+               j--;
             }
         }
-        for(;i>=low;i--)
-        {
-            copy[locCopy--]=array[i];
+        while(i>=low){
+            array[index--]=copy[i];
+            i--; 
         }
-        for(;j>mid;j--)
-        {
-            copy[locCopy--]=array[j];
+        while(j>=mid){
+            array[index--]=copy[j];
+            j--;
         }
-        for(int s=low;s<=high;s++)
-        {
-            array[s] = copy[s];
-        }
-        return (leftCount+rightCount+count)%1000000007;
+        return total;
     }
 }
