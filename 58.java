@@ -9,7 +9,7 @@ public class Solution {
         for (int i = 0; i < string.length; i++) {
             if (string[i] == ' ') {
                 reverse(string, start, i - 1);
-                start = i + 1;
+                start = i + 1;java
             }
         }
         if (string[string.length - 1] != ' ') {
