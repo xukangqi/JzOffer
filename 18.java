@@ -8,18 +8,18 @@ public class ListNode {
     }
 }*/
 public class Solution {
-    public ListNode DeleteNode(ListNode head,ListNode node) {
-        if(head==null||node==null){
+    public ListNode DeleteNode(ListNode head, ListNode node) {
+        if (head == null || node == null) {
             return null;
         }
-        if(head==node){
+        if (head == node) {
             return null;
         }
-        ListNode temp=head;
-        while(temp.next!=node){
-            temp=temp.next;
+        ListNode temp = head;
+        while (temp.next != node) {
+            temp = temp.next;
         }
-        temp.next=node.next;
+        temp.next = node.next;
         return head;
     }
 }
@@ -40,16 +40,17 @@ public class Solution {
         } else if (pHead.next == null) {
             return pHead;
         } else {
-           if(pHead.val==pHead.next.val){
-                ListNode temp=pHead.next;
-                while(temp!=null&&temp.val==pHead.val){
-                    temp=temp.next;
+            if (pHead.val == pHead.next.val) {
+                int val = pHead.next.val;
+                pHead = pHead.next.next;
+                while (pHead != null && pHead.val == val) {
+                    pHead = pHead.next;
                 }
-                return deleteDuplication(temp);
-           }else{
-               pHead.next=deleteDuplication(pHead.next);
-               return pHead;
-           }
+                return deleteDuplication(pHead);
+            } else {
+                pHead.next = deleteDuplication(pHead.next);
+                return pHead;
+            }
         }
     }
 }
