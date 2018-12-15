@@ -54,6 +54,21 @@ e表示的话前面没数字不行
 ## 28
 判断二叉树是否对称
 设置两个指针，按照前序遍历，一个先右后左，一个反过来
-
 ## 30
 用两个栈实现最小数栈java
+
+## 32
+queue 用LinkedList实现,删除是poll或者remove
+分层打印的话多一个参数保存当前层剩余节点，一个参数保存下一层节点
+
+## 34
+二叉树数值有重复，删除时要注意
+注意java比较器写法,如下o1在前，o2在后，如果返回为正数则交换，否则不交换
+```java
+arrayLists.sort(new Comparator<ArrayList<Integer>>() {
+            @Override
+            public int compare(ArrayList<Integer> o1, ArrayList<Integer> o2) {
+                return o2.size()-o1.size();
+            }
+});
+```

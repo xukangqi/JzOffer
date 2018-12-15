@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-
-import javax.xml.stream.events.EndDocument;
 public class Solution {
     public ArrayList < Integer > arrayList;
     public ArrayList < Integer > printMatrix(int[][] matrix) {
