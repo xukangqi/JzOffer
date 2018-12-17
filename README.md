@@ -72,3 +72,28 @@ arrayLists.sort(new Comparator<ArrayList<Integer>>() {
             }
 });
 ```
+
+## 35
+注意另外一种解法
+将复制的节点查到原节点的后面，最后将复制节点统一取出来
+
+## 37
+不知道为什么层序不可以
+
+## 38
+注意如何求全排列
+```java
+ public void find(char[] chars,int index){
+        if(index==chars.length-1){
+            String str=new String(chars);
+            if(!arrayList.contains(str)){
+                arrayList.add(str);
+            }            
+        }
+        for(int i=index;i<chars.length;i++){
+            swap(chars, index,i);
+            find(chars,index+1);
+            swap(chars, index,i);
+        }
+    }
+```
