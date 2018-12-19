@@ -15,7 +15,7 @@ public class Solution {
         if(count%2==0){
             maxHeap.add(num);
             minHeap.add(maxHeap.poll());
-        }else{
+        }ejavalse{
             minHeap.add(num);
             maxHeap.add(minHeap.poll());
         }
