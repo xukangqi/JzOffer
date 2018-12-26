@@ -17,48 +17,39 @@ public class TreeNode {
 }
 */
 public class Solution {
+    public int index;
     String Serialize(TreeNode root) {
-        if(root==null){
-            return "#";
-        }
-         StringBuilder stringBuilder=new StringBuilder();
-          Queue<TreeNode> queue=new LinkedList<>();
-          queue.add(root);
-          stringBuilder.append(root.val+",");
-          while(!queue.isEmpty()){
-                TreeNode temp= queue.poll();
-                if(temp.left!=null){
-                     stringBuilder.append(temp.left.val+",");
-                     queue.add(temp.left);
-                }else{
-                    stringBuilder.append("#,");
-                }
-
-                if(temp.right!=null){
-                     queue.add(temp.right);
-                     stringBuilder.append(temp.right.val+",");
-                }else{
-                    stringBuilder.append("#,");
-                }
-          }
-          return stringBuilder.toString();
-
+        return build(root);
     }
+    public String build(TreeNode root) {
+        if (root != null) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(root.val + ",");
+            stringBuilder.append(build(root.left));
+            stringBuilder.append(build(root.right));
+            return stringBuilder.toString();
+        } else {
+            return "#,";
+        }
+    }
+
     TreeNode Deserialize(String str) {
-        if(str.equals("#")){
+        if (str.equals("#,")) {
             return null;
         }
-        String[] strings=str.split(",");
-        return build(strings,0);
-}
-
-    public TreeNode build(String[] strings,int index){
-         if(index>=strings.length||strings[index].equals("#")){
-             return null;
-         }
-         TreeNode root=new TreeNode(Integer.parseInt(strings[index]));
-         root.left=build(strings, index*2+1);
-         root.right=build(strings, index*2+2);
-         return root;
+        String[] chars = str.split(",");
+        index = 0;
+        return deserializeToTree(chars);
+    }
+    TreeNode deserializeToTree(String[] string) {
+        if (index > string.length || string[index].equals("#")) {
+            index++;
+            return null;
+        } else {
+            TreeNode treeNode = new TreeNode(Integer.parseInt(string[index++]));
+            treeNode.left = deserializeToTree(string);
+            treeNode.right = deserializeToTree(string);
+            return treeNode;
+        }
     }
 }
